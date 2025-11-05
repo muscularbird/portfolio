@@ -6,6 +6,8 @@ import Navbar from './components/navbar-components/navbar.tsx'
 import Project from "./routes/Project.tsx";
 import Projects from "./routes/Projects.tsx";
 import About from "./routes/About.tsx";
+import Footer from "./components/Footer.tsx";
+import Contact from "./routes/Contact.tsx";
 
 function AppLayout() {
   const location = useLocation();
@@ -18,7 +20,9 @@ function AppLayout() {
         <Route path="/projects/:projectName" element={<Project />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer />
     </>
   );
 }

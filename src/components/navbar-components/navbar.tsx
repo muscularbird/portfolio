@@ -130,11 +130,11 @@ export default function Navbar() {
                     className="flex-row items-center gap-2 py-1.5 font-medium text-foreground hover:text-primary"
                   >
                     <Icon
-                      size={16}
+                      size={24}
                       className="text-muted-foreground/80"
                       aria-hidden="true"
                     />
-                    <span>{link.label}</span>
+                    <span className="text-lg">{link.label}</span>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               )
@@ -144,7 +144,7 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-2">
           <Button size="icon" variant="outline" onClick={() => setDarkTheme(!darkTheme)}>
-            {darkTheme ? <SunIcon size={16} /> : <MoonIcon size={16} />}
+            {darkTheme ? <SunIcon size={20} /> : <MoonIcon size={20} />}
           </Button>
         </div>
       </div>
