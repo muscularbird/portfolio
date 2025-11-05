@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from "react"
-import { HouseIcon, InboxIcon, SearchIcon, ZapIcon, MoonIcon, SunIcon } from "lucide-react"
+import { HouseIcon, InboxIcon, SearchIcon, ZapIcon, MoonIcon, SunIcon, ContactIcon } from "lucide-react"
 
 import Logo from "@/components/navbar-components/logo"
 import { Button } from "@/components/ui/button"
@@ -18,9 +18,9 @@ import {
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", icon: HouseIcon, active: true },
   { href: "/projects", label: "Projects", icon: InboxIcon },
   { href: "/about", label: "About Me", icon: ZapIcon },
+  { href: "/contact", label: "Contact", icon: ContactIcon, active: false },
 ]
 
 export default function Navbar() {
@@ -71,7 +71,7 @@ export default function Navbar() {
                 >
                   <path
                     d="M4 12L20 12"
-                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
                   />
                   <path
                     d="M4 12H20"
@@ -79,7 +79,7 @@ export default function Navbar() {
                   />
                   <path
                     d="M4 12H20"
-                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-135"
                   />
                 </svg>
               </Button>
@@ -146,17 +146,6 @@ export default function Navbar() {
           <Button size="icon" variant="outline" onClick={() => setDarkTheme(!darkTheme)}>
             {darkTheme ? <SunIcon size={16} /> : <MoonIcon size={16} />}
           </Button>
-          <div className="relative">
-            <Input
-              id={id}
-              className="peer h-8 ps-8 pe-2"
-              placeholder="Search..."
-              type="search"
-            />
-            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 text-muted-foreground/80 peer-disabled:opacity-50">
-              <SearchIcon size={16} />
-            </div>
-          </div>
         </div>
       </div>
     </header>
