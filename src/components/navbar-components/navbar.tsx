@@ -18,26 +18,35 @@ import {
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", icon: HouseIcon, active: true },
-  { href: "#", label: "Inbox", icon: InboxIcon },
-  { href: "#", label: "Insights", icon: ZapIcon },
+  { href: "/", label: "Home", icon: HouseIcon, active: true },
+  { href: "/projects", label: "Projects", icon: InboxIcon },
+  { href: "/about", label: "About Me", icon: ZapIcon },
 ]
 
 export default function Navbar() {
   const id = useId()
-  const [darkTheme, setDarkTheme] = useState<boolean>(false)
+  // initialize theme: prefer saved preference, fall back to dark by default
+  const [darkTheme, setDarkTheme] = useState<boolean>(() => {
+    try {
+      const saved = typeof window !== "undefined" ? localStorage.getItem("theme") : null
+      if (saved) return saved === "dark"
+    } catch (e) {}
+    return true
+  })
 
   useEffect(() => {
     if (darkTheme) {
       document.documentElement.classList.add("dark")
+      try { localStorage.setItem("theme", "dark") } catch (e) {}
     } else {
       document.documentElement.classList.remove("dark")
-        }
+      try { localStorage.setItem("theme", "light") } catch (e) {}
+    }
   }, [darkTheme])
 
   return (
     <header className="border-b px-4 md:px-6">
-      <div className="flex h-16 items-center justify-between gap-4">
+      <div className="flex h-24 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex flex-1 items-center gap-2">
           {/* Mobile menu trigger */}
@@ -103,7 +112,7 @@ export default function Navbar() {
           </Popover>
           {/* Logo */}
           <div className="flex items-center">
-            <a href="#" className="text-primary hover:text-primary/90">
+            <a href="/" className="text-primary hover:text-primary/90">
               <Logo />
             </a>
           </div>
