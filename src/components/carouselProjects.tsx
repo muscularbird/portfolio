@@ -10,13 +10,6 @@ import Autoplay from "embla-carousel-autoplay"
 import { useNavigate } from "react-router"
 import { projects } from '@/utils/projects'
 
-interface ProjectsProps {
-    title: string
-    images: string[]
-    description: string,
-    link: string,
-}
-
 export default function CarouselProjects() {
     const navigate = useNavigate();
     return (

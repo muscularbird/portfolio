@@ -1,9 +1,8 @@
-import { useEffect, useId, useState } from "react"
-import { HouseIcon, InboxIcon, SearchIcon, ZapIcon, MoonIcon, SunIcon, ContactIcon } from "lucide-react"
+import { useEffect, useState } from "react"
+import { InboxIcon, ZapIcon, MoonIcon, SunIcon, ContactIcon } from "lucide-react"
 
 import Logo from "@/components/navbar-components/logo"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,7 +23,6 @@ const navigationLinks = [
 ]
 
 export default function Navbar() {
-  const id = useId()
   // initialize theme: prefer saved preference, fall back to dark by default
   const [darkTheme, setDarkTheme] = useState<boolean>(() => {
     try {
@@ -46,7 +44,7 @@ export default function Navbar() {
 
   return (
     <header className="border-b px-4 md:px-6">
-      <div className="flex h-24 items-center justify-between gap-4">
+      <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex flex-1 items-center gap-2">
           {/* Mobile menu trigger */}

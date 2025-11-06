@@ -2,13 +2,12 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import CarouselProjects from "../components/carouselProjects.tsx";
 import { Card } from "@/components/ui/card.tsx";
 import { ChevronDown } from "lucide-react";
 import { projects } from "@/utils/projects.ts";
 import { skills } from "@/utils/skills.ts";
 import { Button } from "@/components/ui/button.tsx";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,31 +15,30 @@ function App() {
   const title = useRef<HTMLHeadingElement | null>(null);
   const projectCards = useRef<(HTMLDivElement | null)[]>([]);
   const skillsCardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
+  const navigate = useNavigate();
 
   useGSAP(() => {
+  // position offscreen relative to its own width to avoid padding/viewport issues
     gsap.set(title.current, { x: "-100vw", autoAlpha: 1, immediateRender: true });
     gsap.set(projectCards.current, { x: "100vw", autoAlpha: 0 });
     gsap.set(skillsCardsRef.current, { x: "-100vw", autoAlpha: 0 });
 
     gsap.timeline({
       scrollTrigger: {
-        start: 100,
-        end: 800,
-        scrub: true,
-        markers: true,
         trigger: title.current,
-        pin: true,
+        start: "top 80%",   // when the top of title reaches 80% of viewport
+        end: "top 30%",
+        scrub: true,
+        // markers: true,
+        // pin: true,
         // pinSpacing: true,
         // anticipatePin: 1,
       }
-    }).to(".title", {
-      x: 0,
-      ease: "power3.out",
-      // rotate: 1080,
-    });
+    }).to(title.current, { x: 0, autoAlpha: 1, ease: "power3.out" });
 
-    projectCards.current.forEach((card, index) => {
+  projectCards.current.forEach((card) => {
       gsap.timeline({
         scrollTrigger: {
           trigger: card,
@@ -56,7 +54,7 @@ function App() {
       });
     });
 
-    skillsCardsRef.current.forEach((card, index) => {
+  skillsCardsRef.current.forEach((card) => {
       gsap.timeline({
         scrollTrigger: {
           trigger: card,
@@ -83,29 +81,44 @@ function App() {
   //   // document.body.removeChild(link);
   // };
 
+  const scrollToContent = () => {
+    const el = document.getElementById('content')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <div className="min-h-[400vh] flex flex-col items-center px-4">
-      <h1 className="text-2xl mt-10">Hi, I'm Etienne!</h1>
-      <div className="flex gap-4">
-        <Button
-          onClick={() => {
-            const newWindow = window.open('/CV_Etienne_KRETZ.pdf', '_blank');
-            if (newWindow) newWindow.opener = null;
-          }}
-          className="items-center justify-center"
-        >
-          My CV
-        </Button>
-        <Button onClick={() => {window.location.href = '/contact'}} className="items-center justify-center">Contact Me</Button>
-      </div>
-      <h1 className="text-2xl mt-180">Scroll down to discover more about me</h1>
-      <ChevronDown className="animate-bounce text-4xl" width={40} height={40} />
-      <h1 ref={title} className="text-4xl md:text-6xl font-bold title text-center max-w-full">
-        Welcome to My Portfolio!
-      </h1>
-      <h2 className="text-2xl font-bold mt-250">Here are some of my projects:</h2>
-      <div className="container mt-4 flex flex-wrap justify-center">
+    <div className="min-h-[400vh] flex flex-col items-center w-full">
+      {/* HERO */}
+      <section id="hero" className="relative h-screen w-full flex items-center justify-center px-4">
+        <div className="z-10 flex flex-col items-center gap-6">
+          <div className="flex gap-4">
+            <Button
+              onClick={() => {
+                const newWindow = window.open('/CV_Etienne_KRETZ.pdf', '_blank');
+                if (newWindow) newWindow.opener = null;
+              }}
+              className="items-center justify-center"
+            >
+              My CV
+            </Button>
+            <Button onClick={() => navigate('/contact')} className="items-center justify-center">Contact Me</Button>
+          </div>
+        </div>
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 align-middle justify-center text-center">
+          <p>Scroll down to discover more about me</p>
+          <button onClick={scrollToContent} aria-label="Scroll down" className="cursor-pointer">
+            <ChevronDown className="animate-bounce text-4xl" width={40} height={40} />
+          </button>
+        </div>
+      </section>
+
+      {/* CONTENT BELOW HERO */}
+      <section id="content" ref={containerRef} className="w-full flex flex-col px-4 items-center">
+        <h1 ref={title} className="text-4xl md:text-6xl font-bold title text-center max-w-full m-40">
+          Welcome to My Portfolio!
+        </h1>
+        <h2 className="text-2xl font-bold mt-6">Here are some of my projects:</h2>
+        <div className="container mt-4 flex flex-wrap justify-center">
         {projects.map((project, index) => (
           <Card
             key={index}
@@ -128,12 +141,12 @@ function App() {
       {/* <div className="container mt-10">
         <CarouselProjects/>
       </div> */}
-      <h2 className="text-2xl font-bold mt-10">Here are some of my skills:</h2>
-      <div className="container mt-5 flex flex-wrap justify-center">
+        <h2 className="text-2xl font-bold mt-10">Here are some of my skills:</h2>
+        <div className="container mt-5 flex flex-wrap justify-center">
         {skills.map((skill, index) => (
           <Card
             key={index}
-            className="m-3 md:m-10 p-5 w-full sm:w-80"
+            className="m-3 md:m-10 p-5 w-full sm:w-60"
             ref={el => { skillsCardsRef.current[index] = el }}
           >
             <img src={`https://cdn.simpleicons.org/${skill?.icon || skill.name.toLowerCase()}`} alt={`${skill.name} icon`} width={100} height={100} className="object-contain max-w-full h-auto" />
@@ -142,6 +155,7 @@ function App() {
           </Card>
         ))}
       </div>
+      </section>
     </div>
   )
 }
