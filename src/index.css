@@ -17,7 +17,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: linear-gradient(to bottom left, oklch(98.4% 0.003 247.858), oklch(92.9% 0.013 255.508), oklch(97% 0.001 106.424));
+  color: 242424;
   background-color: #242424;
 
   font-synthesis: none;
@@ -25,7 +25,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --radius: 0.625rem;
-  --background: linear-gradient(to bottom left, oklch(98.4% 0.003 247.858), oklch(92.9% 0.013 255.508), oklch(97% 0.001 106.424));
+  --background: linear-gradient(to bottom left, #3f4d60 0%, #94a3b8 50%, #1e3a8a 100%);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
@@ -50,7 +50,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.984 0.003 247.858);
   --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary: oklch(20.841% 0.04169 266.371);
   --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
   --sidebar-accent: oklch(0.968 0.007 247.896);
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
@@ -97,7 +97,7 @@
 }
 
 .dark {
-  --custom-background: linear-gradient(to bottom left, #334155 0%, #94a3b8 50%, #1e3a8a 100%);
+  --custom-background: linear-gradient(to bottom left, oklch(27.9% 0.041 260.031), oklch(37.3% 0.034 259.733), oklch(55.4% 0.046 257.417));
   --background: var(--custom-background);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);

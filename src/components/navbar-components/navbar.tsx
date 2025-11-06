@@ -14,6 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useNavigate } from "react-router"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -41,6 +42,7 @@ export default function Navbar() {
       try { localStorage.setItem("theme", "light") } catch (e) {}
     }
   }, [darkTheme])
+  const navigate = useNavigate();
 
   return (
     <header className="border-b px-4 md:px-6">
@@ -90,9 +92,10 @@ export default function Navbar() {
                     return (
                       <NavigationMenuItem key={index} className="w-full">
                         <NavigationMenuLink
-                          href={link.href}
+                          // href={link.href}
                           className="flex-row items-center gap-2 py-1.5"
                           active={link.active}
+                          onClick={() => navigate(link.href)}
                         >
                           <Icon
                             size={16}
