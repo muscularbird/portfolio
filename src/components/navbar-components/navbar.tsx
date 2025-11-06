@@ -91,10 +91,10 @@ export default function Navbar() {
                     const Icon = link.icon
                     return (
                       <NavigationMenuItem key={index} className="w-full">
-                        <NavigationMenuLink
+                        <Button
                           // href={link.href}
                           className="flex-row items-center gap-2 py-1.5"
-                          active={link.active}
+                          // active={link.active}
                           onClick={() => navigate(link.href)}
                         >
                           <Icon
@@ -103,7 +103,7 @@ export default function Navbar() {
                             aria-hidden="true"
                           />
                           <span>{link.label}</span>
-                        </NavigationMenuLink>
+                        </Button>
                       </NavigationMenuItem>
                     )
                   })}
