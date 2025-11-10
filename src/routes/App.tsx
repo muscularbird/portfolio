@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { Card } from "@/components/ui/card.tsx";
 import { ChevronDown } from "lucide-react";
@@ -8,14 +9,18 @@ import { projects } from "@/utils/projects.ts";
 import { skills } from "@/utils/skills.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { useNavigate } from "react-router-dom";
+import ProjectsCard from "@/components/ProjectsCard";
 
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(SplitText) 
+gsap.registerPlugin(useGSAP);
 
 function App() {
   const title = useRef<HTMLHeadingElement | null>(null);
   const projectCards = useRef<(HTMLDivElement | null)[]>([]);
   const skillsCardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const mainTitleRef = useRef<HTMLHeadingElement | null>(null);
 
   const navigate = useNavigate();
 
@@ -24,6 +29,7 @@ function App() {
     gsap.set(title.current, { x: "-100vw", autoAlpha: 1, immediateRender: true });
     gsap.set(projectCards.current, { x: "100vw", autoAlpha: 0 });
     gsap.set(skillsCardsRef.current, { x: "-100vw", autoAlpha: 0 });
+    gsap.set(mainTitleRef.current, { x: 0, autoAlpha: 1, ease: "power3.out" });
 
     gsap.timeline({
       scrollTrigger: {
@@ -38,39 +44,50 @@ function App() {
       }
     }).to(title.current, { x: 0, autoAlpha: 1, ease: "power3.out" });
 
-  projectCards.current.forEach((card) => {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: "top 65%",
-          end: "bottom 50%",
-          scrub: true,
-          markers: false,
-        },
-      }).to(card, {
-        x: 0,
-        autoAlpha: 1,
-        ease: "power3.out",
-      });
+    let split = SplitText.create(mainTitleRef.current, { type: "chars" });
+
+    gsap.from(split.chars, {
+      // <- selector text, scoped to this component!
+      opacity: 0,
+      y: 100,
+      ease: "back",
+      duration: 0.5,
+      stagger: 0.1
     });
 
-  skillsCardsRef.current.forEach((card) => {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: "top 90%",
-          end: "bottom 40%",
-          scrub: true,
-          markers: false,
-        },
-      }).to(card, {
-        x: 0,
-        autoAlpha: 1,
-        ease: "power3.out",
+    projectCards.current.forEach((card) => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top 65%",
+            end: "bottom 50%",
+            scrub: true,
+            markers: false,
+          },
+        }).to(card, {
+          x: 0,
+          autoAlpha: 1,
+          ease: "power3.out",
+        });
       });
-    });
 
-  });
+    skillsCardsRef.current.forEach((card) => {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: "top 90%",
+            end: "bottom 60%",
+            scrub: true,
+            markers: false,
+          },
+        }).to(card, {
+          x: 0,
+          autoAlpha: 1,
+          ease: "power3.out",
+        });
+      });
+
+    });
 
   // const downloadCV = () => {
   //   const link = document.createElement('a');
@@ -91,6 +108,7 @@ function App() {
       {/* HERO */}
       <section id="hero" className="relative h-screen w-full flex items-center justify-center px-4">
         <div className="z-10 flex flex-col items-center gap-6">
+          <h3 className="text-2xl" ref={mainTitleRef}>I'm Etienne, a passionate developer.</h3>
           <div className="flex gap-4">
             <Button
               onClick={() => {
@@ -120,22 +138,7 @@ function App() {
         <h2 className="text-2xl font-bold mt-6">Here are some of my projects:</h2>
         <div className="container mt-4 flex flex-wrap justify-center">
         {projects.map((project, index) => (
-          <Card
-            key={index}
-            ref={el => { projectCards.current[index] = el }}
-            className="m-3 md:m-5 p-5 w-full sm:w-80 hover:cursor-pointer hover:shadow-lg shadow-blue-300"
-            onClick={() => {window.location.href = '/projects/' + encodeURIComponent(project.title.toLowerCase())}}
-          >
-            <h3 className="text-lg font-semibold">{project.title}</h3>
-            <img
-              src={project.images[0]}
-              alt={`Logo ${index + 1}`}
-              width={100}
-              height={100}
-              className="object-contain max-w-full h-auto"
-            />
-            <p className="mt-2 text-sm text-center text-muted-foreground">{project.description}</p>
-          </Card>
+          <ProjectsCard key={index} project={project} ref={(el: any) => { projectCards.current[index] = el }}/>
         ))}
       </div>
       {/* <div className="container mt-10">

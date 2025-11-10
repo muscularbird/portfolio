@@ -27,7 +27,7 @@
   --radius: 0.625rem;
   --background: linear-gradient(to bottom left, #3f4d60 0%, #94a3b8 50%, #1e3a8a 100%);
   --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
+  --card: oklch(82.504% 0.0022 14.861);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);

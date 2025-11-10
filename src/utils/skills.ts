@@ -13,7 +13,7 @@ export const skills = [
     },
     {
         name: "React",
-        level: "Advanced",
+        level: "Intermediate",
     },
     {
         name: "C++",
